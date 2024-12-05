@@ -164,8 +164,11 @@ XP_D_S = OP_D_S * pars.Redfield_CP ;
 POC_D_Burial = pars.Dist_C_Bur * ( XP_P_D + PP_D ) ; 
 
 % Primary Production in Surface
-% PP_S = pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP ; 
-PP_S = 0 ; 
+PP_S = pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP ; 
+% PP_S = (pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP)*0.75 ; 
+% PP_S = (pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP)*0.5 ; 
+% PP_S = (pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP)*0.25 ; 
+% PP_S = 0 ; 
 
 % POC mineralisation in Surface
 POC_Min_S = pars.kminsurf * Norm_POC_S ; 
