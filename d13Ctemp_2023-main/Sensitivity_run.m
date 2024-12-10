@@ -4,7 +4,7 @@
 %%%% model sensitivity analysis
 
 %%%%%% number of runs
-sensruns = 10 ;
+sensruns = 1000 ;
 
 %%%%%%% multiple runs
 parfor N = 1:sensruns
