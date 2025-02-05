@@ -4,6 +4,10 @@
 % Model front (runs a single model run)
 function run = Alcott_et_al_2024_NatGeo_front(S)
 
+% forcings.PP_S_interp = readtable('PP_S_interp.xlsx') ;
+% tempvals = (forcings.PP_S_interp(:,1)).*1e6 ; %%% correct Myr
+% forcings.PP_S_interp(:,1)=tempvals;
+
 %%% Set up Global parameters
 global stepnumber
 global pars

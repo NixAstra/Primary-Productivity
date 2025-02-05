@@ -136,8 +136,6 @@ Norm_O2_A = O2_A / present.O2_A ;
 
 % Primary production in Proximal
 PP_P = pars.kPhotoprox * Norm_SRP_P * pars.Redfield_CP ; 
-% PP_P = pars.kPhotoprox * (Norm_SRP_P + x) * pars.Redfield_CP ; 
-% PP_P = 0 ;
 
 % POC mineralisation in Proximal
 POC_Min_P = pars.kminprox * Norm_POC_P ;
@@ -150,8 +148,7 @@ XP_P_D = OP_P_D * pars.Redfield_CP ;
 POC_P_Burial = pars.Prox_C_Bur * PP_P ; 
 
 % Primary Production in Distal
-PP_D = pars.kPhotodist * Norm_SRP_D * pars.Redfield_CP ;
-% PP_D = 0 ; 
+PP_D = pars.kPhotodist * Norm_SRP_D * pars.Redfield_CP ; 
 
 % POC mineralisation in Distal
 POC_Min_D = pars.kmindist * Norm_POC_D ; 
@@ -163,12 +160,30 @@ XP_D_S = OP_D_S * pars.Redfield_CP ;
 % Distal sediment POC burial
 POC_D_Burial = pars.Dist_C_Bur * ( XP_P_D + PP_D ) ; 
 
+
+
+
+
 % Primary Production in Surface
-PP_S = pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP ; 
+
+
+% PP_S = pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP ;
 % PP_S = (pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP)*0.75 ; 
 % PP_S = (pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP)*0.5 ; 
 % PP_S = (pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP)*0.25 ; 
 % PP_S = 0 ; 
+
+forcings.PP_S_interp = readtable('PP_S_interp.xlsx') ;
+
+O_PP_S = pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP ;
+xvals=forcings.PP_S_interp.Var1(:);
+yvals=forcings.PP_S_interp.Var2(:).*O_PP_S;
+PP_S = interp1( xvals, yvals , tgeol, 'linear' ) ;
+
+
+
+
+
 
 % POC mineralisation in Surface
 POC_Min_S = pars.kminsurf * Norm_POC_S ; 

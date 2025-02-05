@@ -4,10 +4,10 @@
 %%%% model sensitivity analysis
 
 %%%%%% number of runs
-sensruns = 1000 ;
+sensruns = 1 ;
 
 %%%%%%% multiple runs
-parfor N = 1:sensruns
+for N = 1:sensruns
        
     %%%%%%% run model
     fprintf('Run # %d', N )
