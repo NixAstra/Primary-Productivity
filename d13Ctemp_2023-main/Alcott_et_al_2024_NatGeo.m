@@ -167,20 +167,28 @@ POC_D_Burial = pars.Dist_C_Bur * ( XP_P_D + PP_D ) ;
 % Primary Production in Surface
 
 
-% PP_S = pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP ;
+% PP_S = pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP ; % Original Primary Productivity in the Surface Ocean equation
 % PP_S = (pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP)*0.75 ; 
 % PP_S = (pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP)*0.5 ; 
 % PP_S = (pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP)*0.25 ; 
-% PP_S = 0 ; 
+% PP_S = 0 ; %
 
-forcings.PP_S_interp = readtable('PP_S_interp.xlsx') ;
 
-O_PP_S = pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP ;
-xvals=forcings.PP_S_interp.Var1(:);
-yvals=forcings.PP_S_interp.Var2(:).*O_PP_S;
+
+% O_PP_S = pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP ; % Original Primary Productivity in the Surface Ocean equation
+% forcings.PP_S_interp = readtable('PP_S_interp.xlsx') ;
+% xvals=forcings.PP_S_interp.Var1(:) ;
+% yvals=(forcings.PP_S_interp.Var2(:).*O_PP_S) ;
+
+O_PP_S = pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP ; % Original Primary Productivity in the Surface Ocean equation
+xvals= [-4e9; 0] ;
+% yvals= ([0; 1] .* O_PP_S) ;
+% yvals= [0;1] ;
+yvals= [0; 3.8688e15] ;
+
 PP_S = interp1( xvals, yvals , tgeol, 'linear' ) ;
 
-
+% Plot(Interp1([-1000:1000], [1:2000], [1:10],’linear’) )
 
 
 
