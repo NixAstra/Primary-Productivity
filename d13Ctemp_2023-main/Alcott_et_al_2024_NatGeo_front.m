@@ -26,8 +26,17 @@ stepnumber = 1 ;
 
 %%% Run parameters
 per.sig_SCAV = 0; %Scavenging - percentage of upwelled that is scavenged
-per.POP_deep_feedback = 0.1;%Percentage of POP burial that is redox dependent
-per.CaP_deep_feedback = 0.1;%Percentage of Pauth burial that is redox dependent
+per.sig_SCAV = 0.25; % CHANGED Scavenging - percentage of upwelled that is scavenged
+
+% per.POP_deep_feedback = 0.1; %Percentage of POP burial that is redox dependent
+% per.CaP_deep_feedback = 0.1; %Percentage of Pauth burial that is redox dependent
+per.POP_deep_feedback = 0.5; % CHANGED Percentage of POP burial that is redox dependent
+per.CaP_deep_feedback = 0.9; % CHANGED Percentage of Pauth burial that is redox dependent
+% per.POP_deep_feedback = 0.25; % CHANGED Percentage of POP burial that is redox dependent
+% per.CaP_deep_feedback = 0.5; % CHANGED Percentage of Pauth burial that is redox dependent
+% per.POP_deep_feedback = 0.01; % CHANGED Percentage of POP burial that is redox dependent
+% per.CaP_deep_feedback = 0.01; % CHANGED Percentage of Pauth burial that is redox dependent
+
 pars.CPoxic = 106 ;
 
 load('C_HW_2006.mat')

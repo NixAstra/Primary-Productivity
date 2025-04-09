@@ -4,7 +4,7 @@
 %%%% model sensitivity analysis
 
 %%%%%% number of runs
-sensruns = 20;
+sensruns = 10;
 
 %%%%%%% multiple runs
 for N = 1:sensruns

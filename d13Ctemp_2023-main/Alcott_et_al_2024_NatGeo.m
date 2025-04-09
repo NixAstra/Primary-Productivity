@@ -167,14 +167,14 @@ POC_D_Burial = pars.Dist_C_Bur * ( XP_P_D + PP_D ) ;
 % Primary Production in Surface
 
 
-PP_S = pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP ; % Original Primary Productivity in the Surface Ocean equation
+% PP_S = pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP ; % Original Primary Productivity in the Surface Ocean equation
 % PP_S = (pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP)*0.75 ; 
 % PP_S = (pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP)*0.5 ; 
 % PP_S = (pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP)*0.25 ; 
 % PP_S = 0 ; %
 
-% prim_prod_fraction = interp1([-4200 -800 -600 0],[0 0 1 1],tgeol) ;
-% PP_S = prim_prod_fraction * pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP ; % Original Primary Productivity in the Surface Ocean equation
+prim_prod_fraction = interp1([-4200 -800 -600 0],[0 0 1 1],tgeol) ;
+PP_S = prim_prod_fraction * pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP ; % Original Primary Productivity in the Surface Ocean equation
 
 
 
