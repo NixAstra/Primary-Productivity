@@ -164,6 +164,19 @@ POC_D_Burial = pars.Dist_C_Bur * ( XP_P_D + PP_D ) ;
 
 
 
+%%% stop overly high O2
+% O2_rolloff = (1 - sigmf(Norm_O2_A*21,[1 25])) ;
+O2_rolloff = 1;
+
+POC_P_Burial = POC_P_Burial * O2_rolloff ;
+POC_D_Burial =  POC_D_Burial * O2_rolloff ;
+
+
+
+
+
+
+
 % Primary Production in Surface
 
 
