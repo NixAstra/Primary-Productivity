@@ -1,5 +1,5 @@
 % Set up the figure 
-tiledlayout(5, 5, 'TileSpacing', 'compact', 'Padding', 'compact'); 
+figure
 %ha = tight_subplot(6,5, [0.06 0.06])
 
 %time in myr

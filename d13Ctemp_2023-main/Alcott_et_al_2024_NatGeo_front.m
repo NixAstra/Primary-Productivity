@@ -421,23 +421,40 @@ basfrac = 0.3 ;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%   Sensitivity analysis   %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+%         %%%%%%% parameter space to test
+%         sensparams.D = 0.25 + rand*(2-0.25); 
+% 
+%         sensparams.fbiota =  0.15 + rand*(1-0.15);
+% 
+%         sensparams.C = 0.25 + rand*(3-0.25) ; 
+%         
+%         sensparams.CP = pars.CPoxic + rand*(1100-pars.CPoxic) ; 
+% 
+%         sensparams.EXP = 0.1 + rand* (0.75-0.1) ;
+% 
+%         sensparams.EXP2 = sensparams.EXP + rand* (1-sensparams.EXP) ;
+% 
+%         sensparams.EXPtiming = 1.7 + rand*(3-1.7);
+
+
+
+randfix = 0.5;
 
         %%%%%%% parameter space to test
-        sensparams.D = 0.25 + rand*(2-0.25); 
+        sensparams.D = 0.25 + randfix*(2-0.25); 
 
-        sensparams.fbiota =  0.15 + rand*(1-0.15);
+        sensparams.fbiota =  0.15 + randfix*(1-0.15);
 
-        sensparams.C = 0.25 + rand*(3-0.25) ; 
+        sensparams.C = 0.25 + randfix*(3-0.25) ; 
         
-        sensparams.CP = pars.CPoxic + rand*(1100-pars.CPoxic) ; 
+        sensparams.CP = pars.CPoxic + randfix*(1100-pars.CPoxic) ; 
 
-        sensparams.EXP = 0.1 + rand* (0.75-0.1) ;
+        sensparams.EXP = 0.1 + randfix* (0.75-0.1) ;
 
-        sensparams.EXP2 = sensparams.EXP + rand* (1-sensparams.EXP) ;
+        sensparams.EXP2 = sensparams.EXP + randfix* (1-sensparams.EXP) ;
 
-        sensparams.EXPtiming = 1.7 + rand*(3-1.7);
-
-
+        sensparams.EXPtiming = 1.7 + randfix*(3-1.7);
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
