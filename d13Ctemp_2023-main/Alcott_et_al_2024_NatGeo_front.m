@@ -26,12 +26,12 @@ stepnumber = 1 ;
 
 %%% Run parameters
 per.sig_SCAV = 0; %Scavenging - percentage of upwelled that is scavenged
-per.sig_SCAV = 0.25; % CHANGED Scavenging - percentage of upwelled that is scavenged
+% dper.sig_SCAV = 0.25; % CHANGED Scavenging - percentage of upwelled that is scavenged
 
-% per.POP_deep_feedback = 0.1; %Percentage of POP burial that is redox dependent
-% per.CaP_deep_feedback = 0.1; %Percentage of Pauth burial that is redox dependent
-per.POP_deep_feedback = 0.5; % CHANGED Percentage of POP burial that is redox dependent
-per.CaP_deep_feedback = 0.9; % CHANGED Percentage of Pauth burial that is redox dependent
+per.POP_deep_feedback = 0.1; %Percentage of POP burial that is redox dependent
+per.CaP_deep_feedback = 0.1; %Percentage of Pauth burial that is redox dependent
+%per.POP_deep_feedback = 0.5; % CHANGED Percentage of POP burial that is redox dependent
+%per.CaP_deep_feedback = 0.9; % CHANGED Percentage of Pauth burial that is redox dependent
 % per.POP_deep_feedback = 0.25; % CHANGED Percentage of POP burial that is redox dependent
 % per.CaP_deep_feedback = 0.5; % CHANGED Percentage of Pauth burial that is redox dependent
 % per.POP_deep_feedback = 0.01; % CHANGED Percentage of POP burial that is redox dependent
@@ -306,6 +306,7 @@ OP_P_D_0 = starting.OP_Pconc * Water_P_D_0 ;
 % Proximal FeP burial
 pars.kFePprox = 0.925 ;
 P_FeP_P_0 = pars.kFePprox * starting.SRP_P ; 
+% P_FeP_P_0 = 2 * pars.kFePprox * starting.SRP_P ; 
 
 % Proximal sediment POP burial
 pars.korgP_prox = 1 ;
@@ -318,6 +319,7 @@ pars.kPrel_prox = OP_P_Min_0 ;
 % Proximal CaP burial for steady state
 P_AuthP_P_0 = pars.River_SRP_0 + OP_P_Min_0 - SRP_P_D_0 - P_FeP_P_0 - P_PP_P_0 ; 
 pars.kCaP_P = P_AuthP_P_0 / ( OP_P_Min_0 * ( 1 - starting.fanoxic ) ) ; %NEW
+
 %% Distal P
 
 % SRP open ocean upwelling. Deep to Surface transport
@@ -338,6 +340,7 @@ Dist_OP_S_0 = starting.OP_Dconc * Water_D_S_0 ;
 % Distal sediment FeP burial
 pars.kPF9 = 0.00135238 ; % As used in Slomp and VC, 2007. 
 P_FeP_D_0 = starting.SRP_D * pars.kPF9 ;
+% P_FeP_D_0 = 2 * starting.SRP_D * pars.kPF9 ;
 pars.kFePDOADist = P_FeP_D_0 / ( starting.SRP_D * (1 - starting.fanoxic) ) ;
 
 % Distal sediment POP burial
@@ -369,6 +372,7 @@ pars.kPrel_surf = OP_S_Min_0 ;
 
 %Deep FeP Burial
 P_FeP_DP_0 = pars.kFeP_Deep ;
+% P_FeP_DP_0 = 2 * pars.kFeP_Deep ;
 
 % POP mineralisation in Water_DP
 OP_DP_Min_0 = OP_S_DP_0 - pars.kFeP_Deep ; 
@@ -421,40 +425,41 @@ basfrac = 0.3 ;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%   Sensitivity analysis   %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% 
-%         %%%%%%% parameter space to test
-%         sensparams.D = 0.25 + rand*(2-0.25); 
-% 
-%         sensparams.fbiota =  0.15 + rand*(1-0.15);
-% 
-%         sensparams.C = 0.25 + rand*(3-0.25) ; 
-%         
-%         sensparams.CP = pars.CPoxic + rand*(1100-pars.CPoxic) ; 
-% 
-%         sensparams.EXP = 0.1 + rand* (0.75-0.1) ;
-% 
-%         sensparams.EXP2 = sensparams.EXP + rand* (1-sensparams.EXP) ;
-% 
-%         sensparams.EXPtiming = 1.7 + rand*(3-1.7);
-
-
-
-randfix = 0.5;
 
         %%%%%%% parameter space to test
-        sensparams.D = 0.25 + randfix*(2-0.25); 
+        sensparams.D = 0.25 + rand*(2-0.25); 
 
-        sensparams.fbiota =  0.15 + randfix*(1-0.15);
+        sensparams.fbiota =  0.15 + rand*(1-0.15);
 
-        sensparams.C = 0.25 + randfix*(3-0.25) ; 
-        
-        sensparams.CP = pars.CPoxic + randfix*(1100-pars.CPoxic) ; 
+        sensparams.C = 0.25 + rand*(3-0.25) ; 
 
-        sensparams.EXP = 0.1 + randfix* (0.75-0.1) ;
+        sensparams.CP = pars.CPoxic + rand*(1100-pars.CPoxic) ; 
+        sensparams.CP = pars.CPoxic ;
 
-        sensparams.EXP2 = sensparams.EXP + randfix* (1-sensparams.EXP) ;
+        sensparams.EXP = 0.1 + rand* (0.75-0.1) ;
 
-        sensparams.EXPtiming = 1.7 + randfix*(3-1.7);
+        sensparams.EXP2 = sensparams.EXP + rand* (1-sensparams.EXP) ;
+
+        sensparams.EXPtiming = 1.7 + rand*(3-1.7);
+
+% randfix = 0.5;
+% 
+%         %%%%%%% parameter space to test
+%         sensparams.D = 0.25 + randfix*(2-0.25); 
+% 
+%         sensparams.fbiota =  0.15 + randfix*(1-0.15);
+% 
+%         sensparams.C = 0.25 + randfix*(3-0.25) ; 
+% 
+%         %sensparams.CP = pars.CPoxic + randfix*(1100-pars.CPoxic) ; 
+%         sensparams.CP = pars.CPoxic ;
+% 
+%         sensparams.EXP = 0.1 + randfix* (0.75-0.1) ;
+% 
+%         sensparams.EXP2 = sensparams.EXP + randfix* (1-sensparams.EXP) ;
+% 
+%         sensparams.EXPtiming = 1.7 + randfix*(3-1.7);
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -485,3 +490,5 @@ end
 fprintf('Done: ')
 endtime = toc ;
 fprintf('time (s): %d \n', endtime )
+
+single_run_plot

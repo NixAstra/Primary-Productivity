@@ -54,6 +54,8 @@ silconst = 0.33 ;
 
 EXPOSED = interp1([-4.2e9 -3e9 (-1e9*sensparams.EXPtiming) -1.7e9 -1.6e9 0],[sensparams.EXP sensparams.EXP sensparams.EXP2 1 1 1],t) ; %Rough estimate of rapid emergence prior to GOE
 D = interp1([-4.2e9 -3e9 -2e9 0],[12 5 2 1],t) * sensparams.D;
+% D = interp1([-4.2e9 0],[2.5 1],t) * sensparams.D;
+% D = 1 ;
 
 pars.CPanoxic_prox = sensparams.CP ;
 pars.CPanoxic_dist = sensparams.CP ;
@@ -137,6 +139,9 @@ Norm_O2_A = O2_A / present.O2_A ;
 % Primary production in Proximal
 PP_P = pars.kPhotoprox * Norm_SRP_P * pars.Redfield_CP ; 
 
+%prim_prod_fraction_prox = interp1([-4200 -800 -600 0],[0.25 0.25 1 1],tgeol) ;
+%PP_P = prim_prod_fraction_prox * pars.kPhotoprox * Norm_SRP_P * pars.Redfield_CP ; 
+
 % POC mineralisation in Proximal
 POC_Min_P = pars.kminprox * Norm_POC_P ;
 
@@ -145,31 +150,41 @@ OP_P_D = Water_P_D * OP_Pconc ;
 XP_P_D = OP_P_D * pars.Redfield_CP ; 
 
 % Proximal sediment POC burial
-POC_P_Burial = pars.Prox_C_Bur * PP_P ; 
+POC_P_Burial1 = pars.Prox_C_Bur * PP_P ; 
+
+
+
 
 % Primary Production in Distal
 PP_D = pars.kPhotodist * Norm_SRP_D * pars.Redfield_CP ; 
 
+%prim_prod_fraction_dist = interp1([-4200 -800 -600 0],[0.25 0.25 1 1],tgeol) ;
+%PP_D = prim_prod_fraction_dist * pars.kPhotodist * Norm_SRP_D * pars.Redfield_CP ; 
+% PP_D = 0 ;
+
+
 % POC mineralisation in Distal
 POC_Min_D = pars.kmindist * Norm_POC_D ; 
+
+
+
 
 % POC Export from Distal to Surface
 OP_D_S = Water_D_S * OP_Dconc ;
 XP_D_S = OP_D_S * pars.Redfield_CP ; 
 
 % Distal sediment POC burial
-POC_D_Burial = pars.Dist_C_Bur * ( XP_P_D + PP_D ) ; 
-
+POC_D_Burial1 = pars.Dist_C_Bur * ( XP_P_D + PP_D ) ; 
 
 
 
 
 %%% stop overly high O2
-% O2_rolloff = (1 - sigmf(Norm_O2_A*21,[1 25])) ;
-O2_rolloff = 1;
+O2_rolloff = (1 - sigmf(Norm_O2_A*21,[1 25])) ;
+% O2_rolloff = 1;
 
-POC_P_Burial = POC_P_Burial * O2_rolloff ;
-POC_D_Burial =  POC_D_Burial * O2_rolloff ;
+POC_P_Burial = POC_P_Burial1 * O2_rolloff ;
+POC_D_Burial =  POC_D_Burial1 * O2_rolloff ;
 
 
 
@@ -186,8 +201,8 @@ POC_D_Burial =  POC_D_Burial * O2_rolloff ;
 % PP_S = (pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP)*0.25 ; 
 % PP_S = 0 ; %
 
-prim_prod_fraction = interp1([-4200 -800 -600 0],[0 0 1 1],tgeol) ;
-PP_S = prim_prod_fraction * pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP ; % Original Primary Productivity in the Surface Ocean equation
+ prim_prod_fraction_surf = interp1([-4200 -800 -600 0],[0 0 1 1],tgeol) ;
+ PP_S = prim_prod_fraction_surf * pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP ; % Original Primary Productivity in the Surface Ocean equation
 
 
 
@@ -290,7 +305,11 @@ end
 save = sigmf((log10(Norm_O2_A1)),[3,-5]) ;
 
 FrgfO2 = pars.rgf * D * save ;
+% FrgfO2 = pars.rgf * D^2 * save ;
+
 Frgf = pars.rgf * D ;
+% Frgf = pars.rgf * D^2 ;
+% Frgf = 0 ;
 
 % Land Corg burial 
 Flocb = pars.Flocb_0 * locb ;
