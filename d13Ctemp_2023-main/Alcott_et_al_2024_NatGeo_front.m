@@ -433,7 +433,7 @@ basfrac = 0.3 ;
 
         sensparams.C = 0.25 + rand*(3-0.25) ; 
 
-        sensparams.CP = pars.CPoxic + rand*(1100-pars.CPoxic) ; 
+        %sensparams.CP = pars.CPoxic + rand*(1100-pars.CPoxic) ; 
         sensparams.CP = pars.CPoxic ;
 
         sensparams.EXP = 0.1 + rand* (0.75-0.1) ;
@@ -491,4 +491,4 @@ fprintf('Done: ')
 endtime = toc ;
 fprintf('time (s): %d \n', endtime )
 
-single_run_plot
+%single_run_plot

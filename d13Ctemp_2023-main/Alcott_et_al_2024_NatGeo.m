@@ -116,7 +116,7 @@ dy(2) = Water_P_D + Water_DP_D - Water_D_S ;
 %Surface Ocean
 dy(3) = Water_DP_S + Water_D_S - Water_S_DP - Evaporation_Water ;
 
-%Deep Ocean
+%Deep Oceannorm_o2_a
 dy(4) = Water_S_DP - Water_DP_S - Water_DP_D ;
 
 
@@ -134,13 +134,17 @@ Norm_POC_DP = POC_DP / present.POC_DP ;
 Norm_O2_A = O2_A / present.O2_A ;
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Marine Carbon Cycle
 
 % Primary production in Proximal
-PP_P = pars.kPhotoprox * Norm_SRP_P * pars.Redfield_CP ; 
-
+% PP_P = pars.kPhotoprox * Norm_SRP_P * pars.Redfield_CP ; 
 %prim_prod_fraction_prox = interp1([-4200 -800 -600 0],[0.25 0.25 1 1],tgeol) ;
 %PP_P = prim_prod_fraction_prox * pars.kPhotoprox * Norm_SRP_P * pars.Redfield_CP ; 
+% PP_P = pars.kPhotoprox * Norm_SRP_P * pars.Redfield_CP * 0.1; 
+% PP_P = 0 ;
+PP_P = pars.kPhotoprox * Norm_SRP_P * pars.Redfield_CP * pars.PP_Pchange; 
+
 
 % POC mineralisation in Proximal
 POC_Min_P = pars.kminprox * Norm_POC_P ;
@@ -156,12 +160,12 @@ POC_P_Burial1 = pars.Prox_C_Bur * PP_P ;
 
 
 % Primary Production in Distal
-PP_D = pars.kPhotodist * Norm_SRP_D * pars.Redfield_CP ; 
+%PP_D = pars.kPhotodist * Norm_SRP_D * pars.Redfield_CP ; 
 
-%prim_prod_fraction_dist = interp1([-4200 -800 -600 0],[0.25 0.25 1 1],tgeol) ;
-%PP_D = prim_prod_fraction_dist * pars.kPhotodist * Norm_SRP_D * pars.Redfield_CP ; 
+% prim_prod_fraction_dist = interp1([-4200 -800 -600 0],[0.5 0.5 1 1],tgeol) ;
+% PP_D = prim_prod_fraction_dist * pars.kPhotodist * Norm_SRP_D * pars.Redfield_CP ; 
 % PP_D = 0 ;
-
+PP_D = pars.kPhotodist * Norm_SRP_D * pars.Redfield_CP * pars.PP_Dchange;
 
 % POC mineralisation in Distal
 POC_Min_D = pars.kmindist * Norm_POC_D ; 
@@ -195,14 +199,12 @@ POC_D_Burial =  POC_D_Burial1 * O2_rolloff ;
 % Primary Production in Surface
 
 
-% PP_S = pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP ; % Original Primary Productivity in the Surface Ocean equation
-% PP_S = (pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP)*0.75 ; 
-% PP_S = (pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP)*0.5 ; 
-% PP_S = (pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP)*0.25 ; 
-% PP_S = 0 ; %
+%PP_S = pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP ; % Original Primary Productivity in the Surface Ocean equation
+PP_S = pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP * pars.PP_Schange ; 
+% PP_S = 0 ;
 
- prim_prod_fraction_surf = interp1([-4200 -800 -600 0],[0 0 1 1],tgeol) ;
- PP_S = prim_prod_fraction_surf * pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP ; % Original Primary Productivity in the Surface Ocean equation
+ %prim_prod_fraction_surf = interp1([-4200 -800 -600 0],[0 0 1 1],tgeol) ;
+% PP_S = prim_prod_fraction_surf * pars.kPhotosurf * Norm_SRP_S * pars.Redfield_CP ; % Original Primary Productivity in the Surface Ocean equation
 
 
 
@@ -218,6 +220,7 @@ XP_S_DP = pars.Surf_Deep_XP * ( XP_D_S + PP_S ) ;
 % POC respiration in Water_DP
 POC_DP_Resp = pars.kCF12 * Norm_POC_DP ; 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Deep Carbon Burial
 
 if O2_DPconc < present.Conc_O2_deep
