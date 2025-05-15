@@ -2,7 +2,7 @@
 % Model based on Slomp and VanCappellen, 2007, Biogeosciences; Tsandev et
 % al., 2008, GBC; Tsandev and Slomp, 2009, EPSL. Alcott et al., 2019
 % Model front (runs a single model run)
-function run = Alcott_et_al_2024_NatGeo_front(S)
+function run = Alcott_et_al_2024_NatGeo_front(S,PP_change_vector)
 
 % forcings.PP_S_interp = readtable('PP_S_interp.xlsx') ;
 % tempvals = (forcings.PP_S_interp(:,1)).*1e6 ; %%% correct Myr
@@ -18,6 +18,13 @@ global per
 global present
 global state
 global sensparams
+
+
+
+pars.PP_Pchange = PP_change_vector(1) ;
+pars.PP_Dchange = PP_change_vector(2) ;
+pars.PP_Schange = PP_change_vector(3) ;
+
 
 %% Options
 when.start = -4.2e9 ; %Start time
