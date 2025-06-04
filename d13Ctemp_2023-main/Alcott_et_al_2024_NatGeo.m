@@ -185,7 +185,8 @@ POC_D_Burial1 = pars.Dist_C_Bur * ( XP_P_D + PP_D ) ;
 
 
 %%% stop overly high O2
-O2_rolloff = (1 - sigmf(Norm_O2_A*21,[1 25])) ;
+%O2_rolloff = (1 - sigmf(Norm_O2_A*21,[1 25])) ;
+O2_rolloff = (1./ ( 1 + exp(1 .* ((Norm_O2_A*21) - 25))));
 % O2_rolloff = 1;
 
 POC_P_Burial = POC_P_Burial1 * O2_rolloff ;

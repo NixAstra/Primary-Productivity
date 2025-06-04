@@ -4,7 +4,7 @@
 %%%% model sensitivity analysis
 
 %%%%%% number of runs
-sensruns = 2;
+sensruns = 1000;
 
 PP_Pchange = [0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1] ;
 PP_Dchange = [0 0 0 0 0 0 0 0 0 0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1 1 1 1 1 1 1 1 1 1 1] ;
