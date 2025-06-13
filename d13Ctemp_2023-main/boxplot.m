@@ -1,168 +1,92 @@
-load('1000runs.mat') ;
+%load('1000runs.mat') ;
 % O2_A %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  %meanarrayO2_A = [] ;
-  endarrayO2_A = [] ;
+  transitionarrayO2_A = [] ;
+  transitionarrayO2_DP = [] ;
+  transitionarrayfanoxicprox = [] ;
+  transitionarrayfanoxicdist= [] ;
+  transitionarrayGAST= [] ;
+  transitionarrayTotal_POC_Burial= [] ;
+  transitionarrayCO2atm= [] ;
+  transitionarrayAiso= [] ;
+  transitionarrayPP_P= [] ;
+  transitionarrayPP_D= [] ;
+  transitionarrayPP_S= [] ;
+  transitionarrayTotal_PP= [] ;
+  transitionarrayRepsiration_O2= [] ;
 for VR = 1: 30
      for RN = 1 :1000 
-        %meanarrayO2_A(RN, VR) = nanmean(real(run(RN, VR).state.O2_A)) ;
-        endarrayO2_A(RN, VR) = real(run(RN, VR).state.O2_A(end)) ;
+         %timearray = [] ;
+         disp([RN, VR]) ;
+         beyond800 = find(run(RN, VR).state.time > -8e8) ;
+        if isempty(beyond800) == 1
+            transitionarrayO2_A(RN, VR) = NaN ;
+            transitionarrayO2_DP(RN, VR) = NaN ;
+            transitionarrayfanoxicprox(RN, VR) = NaN ;
+            transitionarrayfanoxicdist(RN, VR) = NaN ;
+            transitionarrayGAST(RN, VR) = NaN ;
+            transitionarrayTotal_POC_Burial(RN, VR) = NaN ;
+            transitionarrayCO2atm(RN, VR) = NaN ;
+            transitionarrayAiso(RN, VR) = NaN ;
+            transitionarrayPP_P(RN, VR) = NaN ;
+            transitionarrayPP_D(RN, VR) = NaN ;
+            transitionarrayPP_S(RN, VR) = NaN ;
+            transitionarrayTotal_PP(RN, VR) = NaN ;
+            transitionarrayRespiration_O2(RN, VR) = NaN ;
+        else
+            firstpointbeyond = beyond800(1) ;
+            transitionarrayO2_A(RN, VR) = real(run(RN, VR).state.O2_A(firstpointbeyond)) ;
+            transitionarrayO2_DP(RN, VR) = real(run(RN, VR).state.O2_DP(firstpointbeyond)) ;
+            transitionarrayfanoxicprox(RN, VR) = real(run(RN, VR).state.fanoxicprox(firstpointbeyond)) ;
+            transitionarrayfanoxicdist(RN, VR) = real(run(RN, VR).state.fanoxicdist(firstpointbeyond)) ;
+            transitionarrayGAST(RN, VR) = real(run(RN, VR).state.GAST(firstpointbeyond)) ;
+            transitionarrayTotal_POC_Burial(RN, VR) = real(run(RN, VR).state.Total_POC_Burial(firstpointbeyond)) ;
+            transitionarrayCO2atm(RN, VR) = real(run(RN, VR).state.CO2atm(firstpointbeyond)) ;
+            transitionarrayAiso(RN, VR) = real(run(RN, VR).state.Aiso(firstpointbeyond)) ;
+            transitionarrayPP_P(RN, VR) = real(run(RN, VR).state.PP_P(firstpointbeyond)) ;
+            transitionarrayPP_D(RN, VR) = real(run(RN, VR).state.PP_D(firstpointbeyond)) ;
+            transitionarrayPP_S(RN, VR) = real(run(RN, VR).state.PP_S(firstpointbeyond)) ;
+            transitionarrayTotal_PP(RN, VR) = real(run(RN, VR).state.Total_PP(firstpointbeyond)) ;
+            transitionarrayRespiration_O2(RN, VR) = real(run(RN, VR).state.Respiration_O2(firstpointbeyond)) ;
+        end
      end                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
 end
 figure ;
-  %boxchart(meanarrayO2_A) ;
-  boxchart(endarrayO2_A) ;
-title('Amospheric O_2') 
+subplot(2, 2, 1)
+  boxchart(transitionarrayO2_A) ;
+subplot(2, 2, 2)
+  boxchart(transitionarrayO2_DP) ;
+subplot(2, 2, 3)
+  boxchart(transitionarrayfanoxicprox) ;
+subplot(2, 2, 4)
+  boxchart(transitionarrayfanoxicdist) ;
 
-% O2_DP %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%meanarrayO2_DP = [] ;
-endarrayO2_DP = [] ;
-for VR = 1: 30
-     for RN = 1 :1000 
-        %meanarrayO2_DP(RN, VR) = nanmean(real(run(RN, VR).state.O2_DP)) ;
-        endarrayO2_DP(RN, VR) = real(run(RN, VR).state.O2_DP(end)) ;
-     end                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-end
 figure ;
-  %boxchart(meanarrayO2_DP) ;
-  boxchart(endarrayO2_DP) ;
-title('Deep Sea O_2')
+subplot(2, 2, 1)
+  boxchart(transitionarrayGAST) ;
+subplot(2, 2, 2)
+  boxchart(transitionarrayTotal_POC_Burial) ;
+subplot(2, 2, 3)
+  boxchart(transitionarrayCO2atm) ;
+subplot(2, 2, 4)
+  boxchart(transitionarrayAiso) ;
 
-% fananoxicdist %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%meanarrayfanoxicdist = [] ;
-endarrayfanoxicdist = [] ;
-for VR = 1: 30
-     for RN = 1 :1000 
-       % meanarrayfanoxicdist(RN, VR) = nanmean(real(run(RN, VR).state.fanoxicdist)) ;
-        endarrayfanoxicdist(RN, VR) = real(run(RN, VR).state.fanoxicdist(end)) ;
-     end                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
-end
-figure ;
-%boxchart(meanarrayfanoxicdist) ;
-boxchart(endarrayfanoxicdist) ;
-title('Distal Anoxia')
+  figure ;
+subplot(2, 2, 1)
+  boxchart(transitionarrayPP_P) ;
+subplot(2, 2, 2)
+  boxchart(transitionarrayPP_D) ;
+subplot(2, 2, 3)
+  boxchart(transitionarrayPP_S) ;
+subplot(2, 2, 4)
+  boxchart(transitionarrayTotal_PP) ;
 
-% fanoxicprox %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%meanarrayfanoxicprox = [] ;
-endarrayfanoxicprox = [] ;
-for VR = 1: 30
-     for RN = 1 :1000 
-       % meanarrayfanoxicprox(RN, VR) = nanmean(real(run(RN, VR).state.fanoxicprox)) ;
-        endarrayfanoxicprox(RN, VR) = real(run(RN, VR).state.fanoxicprox(end)) ;
-     end                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
-end
 figure ;
-%boxchart(meanarrayfanoxicprox) ;
-boxchart(endarrayfanoxicprox) ;
-title('Proximal Anoxia')
+subplot(2, 2, 1)
+  boxchart(transitionarrayRespiration_O2) ;
+% subplot(2, 2, 2)
+%   boxchart(transitionarray) ;
+% subplot(2, 2, 3)
+%   boxchart(transitionarrayPP_S) ;
+% subplot(2, 2, 4)
+%   boxchart(transitionarrayTotal_PP) ;
 
-% GAST %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  meanarrayGAST = [] ;
-  %endarrayGAST = [] ;
-for VR = 1: 30
-     for RN = 1 :1000 
-        meanarrayGAST(RN, VR) = nanmean(real(run(RN, VR).state.GAST)) ;
-       % endarrayGAST(RN, VR) = real(run(RN, VR).state.GAST(end)) ;
-     end                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
-end
-figure ;
-  boxchart(meanarrayGAST) ;
-% boxchart(endarrayGAST) ;
-title('GAST')
-
-% Prox_Preac_Burial %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  %meanarrayProx_Preac_Burial = [] ;
-  endarrayProx_Preac_Burial = [] ;
-for VR = 1: 30
-     for RN = 1 :1000 
-        %meanarrayProx_Preac_Burial(RN, VR) = nanmean(real(run(RN, VR).state.Prox_Preac_Burial)) ;
-        endarrayProx_Preac_Burial(RN, VR) = real(run(RN, VR).state.Prox_Preac_Burial(end)) ;
-     end                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
-end
-figure ;
-  %boxchart(meanarrayProx_Preac_Burial) ;
-  boxchart(endarrayProx_Preac_Burial) ;
-  title('Proximal Reactive P Burial')
-
-% Dist_Preac_Burial %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  %meanarrayDist_Preac_Burial = [] ;
-  endarrayDist_Preac_Burial = [] ;
-for VR = 1: 30
-     for RN = 1 :1000 
-        %meanarrayDist_Preac_Burial(RN, VR) = nanmean(real(run(RN, VR).state.Dist_Preac_Burial)) ;
-        endarrayDist_Preac_Burial(RN, VR) = real(run(RN, VR).state.Dist_Preac_Burial(end)) ;
-     end                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
-end
-figure ;
-  %boxchart(meanarrayDist_Preac_Burial) ;
-  boxchart(endarrayDist_Preac_Burial) ;
-title('Distal Reactive P Burial')
-
-% Deep_Preac_Burial %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  %meanarrayDeep_Preac_Burial = [] ;
-  endarrayDeep_Preac_Burial = [] ;
-for VR = 1: 30
-     for RN = 1 :1000 
-        %meanarrayDeep_Preac_Burial(RN, VR) = nanmean(real(run(RN, VR).state.Deep_Preac_Burial)) ;
-        endarrayDeep_Preac_Burial(RN, VR) = real(run(RN, VR).state.Deep_Preac_Burial(end)) ;
-     end                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
-end
-figure ;
-  %boxchart(meanarrayDeep_Preac_Burial) ;
-  boxchart(endarrayDeep_Preac_Burial) ;
-title('Deep Sea Reactive P Burial')
-
-% CO2atm %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  %meanarrayCO2atm= [] ;
-  endarrayCO2atm = [] ;
-for VR = 1: 30
-     for RN = 1 :1000 
-        %meanarrayCO2atm(RN, VR) = nanmean(real(run(RN, VR).state.CO2atm)) ;
-        endarrayCO2atm(RN, VR) = real(run(RN, VR).state.CO2atm(end)) ;
-     end                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
-end
-figure ;
-  %boxchart(meanarrayCO2atm) ;
-  boxchart(endarrayCO2atm) ;
-title('Atmospheric CO_2')
-
-% Aiso %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  %meanarrayAiso= [] ;
-  endarrayAiso = [] ;
-for VR = 1: 30
-     for RN = 1 :1000 
-        %meanarrayAiso(RN, VR) = nanmean(real(run(RN, VR).state.Aiso)) ;
-        endarrayAiso(RN, VR) = real(run(RN, VR).state.Aiso(end)) ;
-     end                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
-end
-figure ;
-  %boxchart(meanarrayAiso) ;
-  boxchart(endarrayAiso) ;
-title('Aiso')
-
-  % fbiota %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  %meanarrayfbiota= [] ;
-  endarrayfbiota = [] ;
-for VR = 1: 30
-     for RN = 1 :1000 
-        %meanarrayfbiota(RN, VR) = nanmean(real(run(RN, VR).state.fbiota)) ;
-        endarrayfbiota(RN, VR) = real(run(RN, VR).state.fbiota(end)) ;
-     end                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
-end
-figure ;
-  %boxchart(meanarrayfbiota) ;
-  boxchart(endarrayfbiota) ;
-  title('fbiota')
-
-% Total_POC_Burial %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  %meanarrayTotal_POC_Burial= [] ;
-  endarrayTotal_POC_Burial = [] ;
-for VR = 1: 30
-     for RN = 1 :1000 
-        %meanarrayTotal_POC_Burial(RN, VR) = nanmean(real(run(RN, VR).state.Total_POC_Burial)) ;
-        endarrayTotal_POC_Burial(RN, VR) = real(run(RN, VR).state.Total_POC_Burial(end)) ;
-     end                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
-end
-figure ;
-  %boxchart(meanarrayTotal_POC_Burial) ;
-  boxchart(endarrayTotal_POC_Burial) ;
-  title('Total POC Burial')

@@ -552,9 +552,11 @@ P_AuthP_DP =  pars.fPF34 * OP_DP_Min * ( (1-per.CaP_deep_feedback) + ( per.CaP_d
     %POP Deep Ocean
     dy(20) = OP_S_DP - OP_DP_Min - OP_DP_Burial ;
 
-
+Total_PP = PP_S + PP_D + PP_P ;
     
 %% Saving data
+workingstate.Respiration_O2(stepnumber,1) = Respiration_O2;
+workingstate.Total_PP(stepnumber,1) = Total_PP;
 workingstate.FrgfO2(stepnumber,1) = FrgfO2 ;
 
 workingstate.O2_DP(stepnumber,1) = O2_DP ;

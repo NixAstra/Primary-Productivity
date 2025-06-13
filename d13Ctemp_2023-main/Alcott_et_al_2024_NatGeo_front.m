@@ -247,7 +247,7 @@ Mon_O2_deep_0 = starting.O2_DPconc / ( pars.KmO2 + starting.O2_DPconc ) ;
 % respiration constant considering both steady state and monod relationship
 Respiration_O21_0 = Respiration_O2_0 / Mon_O2_deep_0 ;
 
-% Organic carbon respiration. CF12 is the name used in Slomp and VC, 2007
+% Organic carbon respiration. CF12 is the name used in Slomp andresp VC, 2007
 pars.kCF12 = Respiration_O21_0 * pars.Redfield_CO2 ;
 
 % Present day respiration
