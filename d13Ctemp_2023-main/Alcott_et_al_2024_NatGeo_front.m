@@ -2,7 +2,7 @@
 % Model based on Slomp and VanCappellen, 2007, Biogeosciences; Tsandev et
 % al., 2008, GBC; Tsandev and Slomp, 2009, EPSL. Alcott et al., 2019
 % Model front (runs a single model run)
-function run = Alcott_et_al_2024_NatGeo_front(S,PP_change_vector)
+function run = Alcott_et_al_2024_NatGeo_front(S)
 
 % forcings.PP_S_interp = readtable('PP_S_interp.xlsx') ;
 % tempvals = (forcings.PP_S_interp(:,1)).*1e6 ; %%% correct Myr
@@ -21,9 +21,9 @@ global sensparams
 
 
 
-pars.PP_Pchange = PP_change_vector(1) ;
-pars.PP_Dchange = PP_change_vector(2) ;
-pars.PP_Schange = PP_change_vector(3) ;
+% pars.PP_Pchange = PP_change_vector(1) ;
+% pars.PP_Dchange = PP_change_vector(2) ;
+% pars.PP_Schange = PP_change_vector(3) ;
 
 
 %% Options
@@ -134,6 +134,10 @@ starting.GAST_0 = 288 ;
 
 pars.y(22) = starting.A_0 ;
 pars.y(23) = starting.Aiso_0 ;
+
+%%%% oscillator
+pars.y(24) = 1e20 ;
+
 %% Present day values to use for normalization
 present.SRP_P = 9.7e9 ;
 present.SRP_D = 5e12 ;
@@ -432,47 +436,47 @@ basfrac = 0.3 ;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%   Sensitivity analysis   %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-        %%%%%%% parameter space to test
-        sensparams.D = 0.25 + rand*(2-0.25); 
-
-        sensparams.fbiota =  0.15 + rand*(1-0.15);
-
-        sensparams.C = 0.25 + rand*(3-0.25) ; 
-
-        %sensparams.CP = pars.CPoxic + rand*(1100-pars.CPoxic) ; 
-        sensparams.CP = pars.CPoxic ;
-
-        sensparams.EXP = 0.1 + rand* (0.75-0.1) ;
-
-        sensparams.EXP2 = sensparams.EXP + rand* (1-sensparams.EXP) ;
-
-        sensparams.EXPtiming = 1.7 + rand*(3-1.7);
-
-% randfix = 0.5;
 % 
 %         %%%%%%% parameter space to test
-%         sensparams.D = 0.25 + randfix*(2-0.25); 
+%         sensparams.D = 0.25 + rand*(2-0.25); 
 % 
-%         sensparams.fbiota =  0.15 + randfix*(1-0.15);
+%         sensparams.fbiota =  0.15 + rand*(1-0.15);
 % 
-%         sensparams.C = 0.25 + randfix*(3-0.25) ; 
+%         sensparams.C = 0.25 + rand*(3-0.25) ; 
 % 
-%         %sensparams.CP = pars.CPoxic + randfix*(1100-pars.CPoxic) ; 
+%         %sensparams.CP = pars.CPoxic + rand*(1100-pars.CPoxic) ; 
 %         sensparams.CP = pars.CPoxic ;
 % 
-%         sensparams.EXP = 0.1 + randfix* (0.75-0.1) ;
+%         sensparams.EXP = 0.1 + rand* (0.75-0.1) ;
 % 
-%         sensparams.EXP2 = sensparams.EXP + randfix* (1-sensparams.EXP) ;
+%         sensparams.EXP2 = sensparams.EXP + rand* (1-sensparams.EXP) ;
 % 
-%         sensparams.EXPtiming = 1.7 + randfix*(3-1.7);
+%         sensparams.EXPtiming = 1.7 + rand*(3-1.7);
+
+randfix = 0.5;
+
+        %%%%%%% parameter space to test
+        sensparams.D = 0.25 + randfix*(2-0.25); 
+
+        sensparams.fbiota =  0.15 + randfix*(1-0.15);
+
+        sensparams.C = 0.25 + randfix*(3-0.25) ; 
+
+        %sensparams.CP = pars.CPoxic + randfix*(1100-pars.CPoxic) ; 
+        sensparams.CP = pars.CPoxic ;
+
+        sensparams.EXP = 0.1 + randfix* (0.75-0.1) ;
+
+        sensparams.EXP2 = sensparams.EXP + randfix* (1-sensparams.EXP) ;
+
+        sensparams.EXPtiming = 1.7 + randfix*(3-1.7);
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-options = (odeset('maxstep', 1e8)) ;
+options = (odeset('maxstep', 1e6)) ;
 tic
 [rawoutput.T,rawoutput.Y] = ode15s(@Alcott_et_al_2024_NatGeo,[when.start when.end] , pars.y, options) ;
 

@@ -5,7 +5,7 @@
 
 function dy = Alcott_et_al_2024_NatGeo(t,y)
 % Set up dy array
-dy = zeros(22,1) ;
+dy = zeros(24,1) ;
 
 %%% Set up Global parameters
 global stepnumber
@@ -136,6 +136,11 @@ Norm_O2_A = O2_A / present.O2_A ;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Marine Carbon Cycle
+
+
+pars.PP_Pchange = interp1([-4e9 -800 -400 0],[0.5 0.5 1 1],tgeol) ;
+pars.PP_Dchange = interp1([-4e9 -800 -400 0],[0.1 0.1 1 1],tgeol) ;
+pars.PP_Schange = interp1([-4e9 -800 -400 0],[0.1 0.1 1 1],tgeol) ;
 
 
 % Primary production in Proximal
@@ -551,7 +556,15 @@ P_AuthP_DP =  pars.fPF34 * OP_DP_Min * ( (1-per.CaP_deep_feedback) + ( per.CaP_d
 
     %POP Deep Ocean
     dy(20) = OP_S_DP - OP_DP_Min - OP_DP_Burial ;
-
+    
+    %%%% artificial oscillating process
+    if tgeol > -850 && tgeol < -400
+        dy(24) = 1e14 * sin(t) ;
+    else
+        dy(24) = 0 ;
+    end
+    
+    
 Total_PP = PP_S + PP_D + PP_P ;
     
 %% Saving data
@@ -595,6 +608,8 @@ workingstate.Total_POC_Burial(stepnumber,1) = Total_POC_Burial ;
 workingstate.PP_P(stepnumber,1) = PP_P ;
 workingstate.PP_D(stepnumber,1) = PP_D ;
 workingstate.PP_S(stepnumber,1) = PP_S ;
+
+workingstate.y24(stepnumber,1) = y(24) ;
 
 
 
