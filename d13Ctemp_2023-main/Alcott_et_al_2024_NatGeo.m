@@ -135,14 +135,31 @@ Norm_O2_A = O2_A / present.O2_A ;
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Marine Carbon Cycle
 
+%%% Late start Primary Producer Occupancy Expansion %%%%
 
-pars.PP_Pchange = interp1([-4e9 -800 -400 0],[0.5 0.5 1 1],tgeol) ;
-pars.PP_Dchange = interp1([-4e9 -800 -400 0],[0.1 0.1 1 1],tgeol) ;
-pars.PP_Schange = interp1([-4e9 -800 -400 0],[0.1 0.1 1 1],tgeol) ;
+% pars.PP_Pchange = interp1([-4e9 -800 -750 -400 0],[0.5 0.5 0.6 1 1],tgeol) ;
+% pars.PP_Dchange = interp1([-4e9 -800 -750 -400 0],[0.1 0.1 0.2 1 1],tgeol) ;
+% pars.PP_Schange = interp1([-4e9 -800 -750 -400 0],[0.1 0.1 0.2 1 1],tgeol) ;
 
+%%% Mid start Primary Producer Occupancy Expansion %%%
 
+% pars.PP_Pchange = interp1([-4e9 -800 -750 -400 0],[0.5 0.5 0.6 1 1],tgeol) ;
+% pars.PP_Dchange = interp1([-4e9 -800 -750 -400 0],[0.1 0.1 0.2 1 1],tgeol) ;
+% pars.PP_Schange = interp1([-4e9 -800 -750 -400 0],[0.1 0.1 0.2 1 1],tgeol) ;
+
+%%% Early start Primary Producer Occupancy Expansion %%%
+
+pars.PP_Pchange = interp1([-4e9 -800 -750 -680 0],[0.5 1 1 1 1],tgeol) ;
+pars.PP_Dchange = interp1([-4e9 -800 -750 -680 0],[0.5 1 1 1 1],tgeol) ;
+%pars.PP_Schange = interp1([-4e9 -800 -750 -680 0],[0.1 0.1 0.2 1 1],tgeol) ;
+%pars.PP_Schange = sigmf([-800:1:-600], [0.05, -700]) ;
+pars.PP_Schange = sigmf(tgeol, [0.05, -700]) ;
+
+%sigmf([-800:1:-600], [0.05, -700])
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%% Marine Carbon Cycle
 % Primary production in Proximal
 % PP_P = pars.kPhotoprox * Norm_SRP_P * pars.Redfield_CP ; 
 %prim_prod_fraction_prox = interp1([-4200 -800 -600 0],[0.25 0.25 1 1],tgeol) ;
