@@ -150,11 +150,17 @@ Norm_O2_A = O2_A / present.O2_A ;
 
 %%% Early start Primary Producer Occupancy Expansion %%%
 
-pars.PP_Pchange = interp1([-4e9 -800 -750 -680 0],[0.5 1 1 1 1],tgeol) ;
-pars.PP_Dchange = interp1([-4e9 -800 -750 -680 0],[0.5 1 1 1 1],tgeol) ;
+% pars.PP_Pchange = interp1([-4e9 -800 -750 -680 0],[0.5 1 1 1 1],tgeol) ;
+% pars.PP_Dchange = interp1([-4e9 -800 -750 -680 0],[0.5 1 1 1 1],tgeol) ;
 %pars.PP_Schange = interp1([-4e9 -800 -750 -680 0],[0.1 0.1 0.2 1 1],tgeol) ;
 %pars.PP_Schange = sigmf([-800:1:-600], [0.05, -700]) ;
-pars.PP_Schange = sigmf(tgeol, [0.05, -700]) ;
+
+
+
+pars.PP_Schange = sigmf(tgeol, [0.05, -600]) ;
+pars.PP_Dchange = sigmf(tgeol, [0.05, -800]) ;
+pars.PP_Pchange = 1 ;
+% pars.PP_Dchange = 1 ;
 
 %sigmf([-800:1:-600], [0.05, -700])
 
@@ -574,13 +580,13 @@ P_AuthP_DP =  pars.fPF34 * OP_DP_Min * ( (1-per.CaP_deep_feedback) + ( per.CaP_d
     %POP Deep Ocean
     dy(20) = OP_S_DP - OP_DP_Min - OP_DP_Burial ;
     
-    %%%% artificial oscillating process
-    if tgeol > -850 && tgeol < -400
-        dy(24) = 1e14 * sin(t) ;
-    else
-        dy(24) = 0 ;
-    end
-    
+%     %%%% artificial oscillating process
+%     if tgeol > -850 && tgeol < -400
+%         dy(24) = 1e14 * sin(t) ;
+%     else
+%         dy(24) = 0 ;
+%     end
+%     
     
 Total_PP = PP_S + PP_D + PP_P ;
     
@@ -628,6 +634,10 @@ workingstate.PP_S(stepnumber,1) = PP_S ;
 
 workingstate.y24(stepnumber,1) = y(24) ;
 
+workingstate.PP_Schange(stepnumber,1) = pars.PP_Schange ;
+workingstate.PP_Pchange(stepnumber,1) = pars.PP_Pchange ;
+workingstate.PP_Dchange(stepnumber,1) = pars.PP_Dchange ;
+
 
 
 %%%%%%% record time
@@ -636,5 +646,10 @@ workingstate.time(stepnumber,1) = t ;
 %%% final action: record current model step
 stepnumber = stepnumber + 1 ;
 
+pars.display_resolution = 200 ;
 
+    if mod(stepnumber,pars.display_resolution) == 0 
+        %%%% print model state to screen
+        fprintf('Model step: %d \t', stepnumber); fprintf('time: %d \t \n', tgeol) ;
+    end
 end
